@@ -28,7 +28,7 @@ const playerKeyPress = () => {
 }
 
 const pieceInit = () => {
-    const currPiece = tetrominoO
+    const currPiece = getRandomTetromino()
     player.value = currPiece
     for(let i = 0; i < currPiece.length; i++){
         let x = 4
@@ -39,6 +39,10 @@ const pieceInit = () => {
     }
     switch(currPiece){
         case tetrominoI:
+            playerPiece1XY.value = [2, 3]
+            playerPiece2XY.value = [2, 4]
+            playerPiece3XY.value = [2, 5]
+            playerPiece4XY.value = [2, 6]
             drawBlock.value = 'I'
             break
         case tetrominoO:
@@ -49,22 +53,42 @@ const pieceInit = () => {
             drawBlock.value = 'O'
             break
         case tetrominoJ:
+            playerPiece1XY.value = [0, 4]
+            playerPiece2XY.value = [1, 4]
+            playerPiece3XY.value = [1, 5]
+            playerPiece4XY.value = [1, 6]
             drawBlock.value = 'J'
             break
         case tetrominoL:
+            playerPiece1XY.value = [1, 4]
+            playerPiece2XY.value = [1, 5]
+            playerPiece3XY.value = [1, 6]
+            playerPiece4XY.value = [0, 6]
             drawBlock.value = 'L'
             break
         case tetrominoS:
             drawBlock.value = 'S'
+            playerPiece1XY.value = [1, 4]
+            playerPiece2XY.value = [1, 5]
+            playerPiece3XY.value = [0, 5]
+            playerPiece4XY.value = [0, 6]
             break
         case tetrominoZ:
+            playerPiece1XY.value = [0, 4]
+            playerPiece2XY.value = [0, 5]
+            playerPiece3XY.value = [1, 5]
+            playerPiece4XY.value = [1, 6]
             drawBlock.value = 'Z'
             break
         case tetrominoT:
+            playerPiece1XY.value = [0, 4]
+            playerPiece2XY.value = [0, 5]
+            playerPiece3XY.value = [0, 6]
+            playerPiece4XY.value = [1, 5]
             drawBlock.value = 'T'
             break
     }
-    setInterval(gravity, 800)
+    playerGravity
 }
 
 const gravity = () => {
@@ -82,6 +106,23 @@ const gravity = () => {
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+
+    if(collisionDetection() === false){
+        clearInterval(playerGravity)
+        playerGravity = setInterval(gravity, 600)
+        pieceInit()
+    }
+}
+
+let playerGravity = setInterval(gravity, 600)
+
+const collisionDetection = () => {
+    if((playerPiece1XY.value)[0] > 22 || (playerPiece2XY.value)[0] > 22 || (playerPiece3XY.value)[0] > 22 || (playerPiece4XY.value)[0] > 22){
+        return false
+    }
+    else{
+        return true
+    }
 }
 
 onMounted(() => {
