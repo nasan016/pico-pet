@@ -69,10 +69,10 @@
   color: #0000;
   justify-self: start;
   margin-right: auto;
-  height: 50px;
+  height: 35px;
   width: 150px;
-  font-size: 36px;
-  line-height: 50px;
+  font-size: 32px;
+  line-height: 35px;
   text-align: center;
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
@@ -95,10 +95,10 @@
 }
 
 .views{
-  height: 50px;
-  width: 100px;
-  font-size: 16px;
-  line-height: 50px;
+  height: 35px;
+  width: 90px;
+  font-size: 14px;
+  line-height: 35px;
   text-align: center;
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 400;

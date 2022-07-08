@@ -6,10 +6,9 @@ import { ref } from 'vue';
 <template>
     <div class="setFont d-flex flex-column">
         <div id="next">
-            <div class="displayTitle" style="font-size: 18px">NEXT</div>
+            <div class="displayTitle">NEXT</div>
             <div>idk</div>
         </div>
-            <v-divider/>
     </div>
 </template>
 

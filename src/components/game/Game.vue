@@ -1,27 +1,113 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { onMounted } from 'vue'
 import NextDisplay from './stat-display/NextDisplay.vue'
 import StatDisplay from './stat-display/StatDisplay.vue'
+import {board, getTetrominoColor} from "@/components/game/game";
+import { 
+    getRandomTetromino, 
+    tetrominoI, 
+    tetrominoO, 
+    tetrominoT, 
+    tetrominoZ, 
+    tetrominoS, 
+    tetrominoL, 
+    tetrominoJ } from './Tetrominos'
 
-const playFieldWidht : number = 10
-const playFieldHeight : number = 20
+const playerPiece1XY = ref([0, 0])
+const playerPiece2XY = ref([0, 0])
+const playerPiece3XY = ref([0, 0])
+const playerPiece4XY = ref([0, 0])
+const drawBlock = ref(' ')
+const player = ref(tetrominoO)
 
+const playerKeyPress = () => {
+    document.addEventListener('keydown', e => {
+        console.log(e)
+    })
+}
+
+const pieceInit = () => {
+    const currPiece = tetrominoO
+    player.value = currPiece
+    for(let i = 0; i < currPiece.length; i++){
+        let x = 4
+        for(let j = 0; j < currPiece[i].length; j++){
+            (board.value)[i][x] = currPiece[i][j]
+            x++
+        }
+    }
+    switch(currPiece){
+        case tetrominoI:
+            drawBlock.value = 'I'
+            break
+        case tetrominoO:
+            playerPiece1XY.value = [0, 4]
+            playerPiece2XY.value = [0, 5]
+            playerPiece3XY.value = [1, 4]
+            playerPiece4XY.value = [1, 5]
+            drawBlock.value = 'O'
+            break
+        case tetrominoJ:
+            drawBlock.value = 'J'
+            break
+        case tetrominoL:
+            drawBlock.value = 'L'
+            break
+        case tetrominoS:
+            drawBlock.value = 'S'
+            break
+        case tetrominoZ:
+            drawBlock.value = 'Z'
+            break
+        case tetrominoT:
+            drawBlock.value = 'T'
+            break
+    }
+    setInterval(gravity, 800)
+}
+
+const gravity = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    ((playerPiece1XY.value)[0]) = ((playerPiece1XY.value)[0]) + 1;
+    ((playerPiece2XY.value)[0]) = ((playerPiece2XY.value)[0]) + 1;
+    ((playerPiece3XY.value)[0]) = ((playerPiece3XY.value)[0]) + 1;
+    ((playerPiece4XY.value)[0]) = ((playerPiece4XY.value)[0]) + 1;
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+onMounted(() => {
+    pieceInit()
+})
 </script>
 
 <template>
     <div id="game" class="d-flex justify-center">
         <div class="stats d-flex flex-column justify-end">
-        <StatDisplay/>
+            <StatDisplay/>
         </div>
-        <div class="board d-flex"> 
-            <div v-for="i in 10" :key="i">
-                <div class="cell" v-for="j in 20" :key="j">
+        <div id="board" class="board d-flex flex-column"> 
+            <div class="d-flex flex-row" v-for="(row, rowIdx) in board" :key="rowIdx">
+                <div class="cell hide-font" 
+                v-for="(item, colIdx) in row" :key="colIdx" 
+                :class="rowIdx < 4 ? 'hidden' : getTetrominoColor(item)"
+                >
+                    {{ item }}
                 </div>
             </div>
-            </div>
-        <span class="nextBlock">
-        <NextDisplay/>
-        </span>
         </div>
+        <span class="nextBlock">
+            <NextDisplay/>
+        </span>
+    </div>
 </template>
 
 <style scoped>
@@ -30,6 +116,11 @@ const playFieldHeight : number = 20
 
 #game{
     width: 50vw;
+    padding-top: 50px;
+}
+
+.hidden{
+    display: none;
 }
 
 .nextBlock{
@@ -44,16 +135,73 @@ const playFieldHeight : number = 20
 }
 .board{
     margin:20px;
-    border-radius: 6px;
+    border-radius: 4px;
+    border: solid 1px #D5D6D8;
+    border-style: none solid none solid;
     font-family:'Roboto Mono', monospace;
     font-size: 12px;
-    background-color: #ebedea;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     }
 
 .cell{
-    height: 28px;
-    width: 28px;
+    height: 30px;
+    width: 30px;
     border-radius: 4px;
+    text-align: center;
+    font-size: 1rem;
+    user-select: none;
+    line-height: 4px;
+}
+
+.emptyCell{
+    font-size: 40px;
+}
+.tetrominoI{
+    background-image: linear-gradient(#68EFCE, #4DB5FA);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+}
+
+.tetrominoL{
+    background-image: linear-gradient(#3F83E9, #6B2ED3);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+}
+
+.tetrominoJ{
+    background-image: linear-gradient(#F0853C, #E1520D);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+}
+
+.tetrominoO{
+    background-image: linear-gradient(#FFE080, #FFAF78);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+}
+
+.tetrominoS{
+    background-image: linear-gradient(#02EA45, #369739);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+}
+
+.tetrominoZ{
+    background-image: linear-gradient(#ED354C, #A41E36);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+}
+
+.tetrominoT{
+    background-image: linear-gradient(#AE00D5, #7A0BB3);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
 }
 </style>
