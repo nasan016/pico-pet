@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { onMounted } from 'vue'
 import NextDisplay from './stat-display/NextDisplay.vue'
 import StatDisplay from './stat-display/StatDisplay.vue'
-import {board, getTetrominoColor} from "@/components/game/game";
+import {board, getTetrominoColor, isString} from "@/components/game/game";
 import { 
     getRandomTetromino, 
     tetrominoI, 
@@ -18,78 +18,11 @@ const playerPiece1XY = ref([0, 0])
 const playerPiece2XY = ref([0, 0])
 const playerPiece3XY = ref([0, 0])
 const playerPiece4XY = ref([0, 0])
-const drawBlock = ref(' ')
-const player = ref(tetrominoO)
 
-const playerKeyPress = () => {
-    document.addEventListener('keydown', e => {
-        console.log(e)
-    })
-}
+const placedPieces = ref([[-1, -1]])
+const drawBlock = ref([' '])
+const time = ref(80)
 
-const pieceInit = () => {
-    const currPiece = getRandomTetromino()
-    player.value = currPiece
-    for(let i = 0; i < currPiece.length; i++){
-        let x = 4
-        for(let j = 0; j < currPiece[i].length; j++){
-            (board.value)[i][x] = currPiece[i][j]
-            x++
-        }
-    }
-    switch(currPiece){
-        case tetrominoI:
-            playerPiece1XY.value = [2, 3]
-            playerPiece2XY.value = [2, 4]
-            playerPiece3XY.value = [2, 5]
-            playerPiece4XY.value = [2, 6]
-            drawBlock.value = 'I'
-            break
-        case tetrominoO:
-            playerPiece1XY.value = [0, 4]
-            playerPiece2XY.value = [0, 5]
-            playerPiece3XY.value = [1, 4]
-            playerPiece4XY.value = [1, 5]
-            drawBlock.value = 'O'
-            break
-        case tetrominoJ:
-            playerPiece1XY.value = [0, 4]
-            playerPiece2XY.value = [1, 4]
-            playerPiece3XY.value = [1, 5]
-            playerPiece4XY.value = [1, 6]
-            drawBlock.value = 'J'
-            break
-        case tetrominoL:
-            playerPiece1XY.value = [1, 4]
-            playerPiece2XY.value = [1, 5]
-            playerPiece3XY.value = [1, 6]
-            playerPiece4XY.value = [0, 6]
-            drawBlock.value = 'L'
-            break
-        case tetrominoS:
-            drawBlock.value = 'S'
-            playerPiece1XY.value = [1, 4]
-            playerPiece2XY.value = [1, 5]
-            playerPiece3XY.value = [0, 5]
-            playerPiece4XY.value = [0, 6]
-            break
-        case tetrominoZ:
-            playerPiece1XY.value = [0, 4]
-            playerPiece2XY.value = [0, 5]
-            playerPiece3XY.value = [1, 5]
-            playerPiece4XY.value = [1, 6]
-            drawBlock.value = 'Z'
-            break
-        case tetrominoT:
-            playerPiece1XY.value = [0, 4]
-            playerPiece2XY.value = [0, 5]
-            playerPiece3XY.value = [0, 6]
-            playerPiece4XY.value = [1, 5]
-            drawBlock.value = 'T'
-            break
-    }
-    playerGravity
-}
 
 const gravity = () => {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
@@ -107,27 +40,112 @@ const gravity = () => {
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 
-    if(collisionDetection() === false){
-        clearInterval(playerGravity)
-        playerGravity = setInterval(gravity, 600)
-        pieceInit()
-    }
+        if(collisionDetection() === false){
+            clearInterval(playerGravity)
+            playerGravity = setInterval(gravity, time.value)
+            pieceInit()
+            console.log((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]])
+        }
+
 }
 
-let playerGravity = setInterval(gravity, 600)
+let playerGravity = setInterval(gravity, time.value)
 
 const collisionDetection = () => {
-    if((playerPiece1XY.value)[0] > 22 || (playerPiece2XY.value)[0] > 22 || (playerPiece3XY.value)[0] > 22 || (playerPiece4XY.value)[0] > 22){
+    
+    if (
+    (playerPiece1XY.value)[0] > 22
+    || (playerPiece2XY.value)[0] > 22
+    || (playerPiece3XY.value)[0] > 22
+    || (playerPiece4XY.value)[0] > 22){
+        (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value.toString();
+        (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value.toString();
+        (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value.toString();
+        (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value.toString();
         return false
     }
-    else{
+    else if(
+        ((board.value)[(playerPiece1XY.value)[0] + 1][(playerPiece1XY.value)[1]] !== '.' 
+            && isString((board.value)[(playerPiece1XY.value)[0] + 1][(playerPiece4XY.value)[1]]))
+        || ((board.value)[(playerPiece2XY.value)[0] + 1][(playerPiece2XY.value)[1]] !== '.' 
+            && isString((board.value)[(playerPiece2XY.value)[0] + 1][(playerPiece4XY.value)[1]]))
+        || ((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]] !== '.' 
+            && isString((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece4XY.value)[1]]))
+        || (((board.value)[(playerPiece4XY.value)[0] + 1][(playerPiece4XY.value)[1]] !== '.')
+            && isString((board.value)[(playerPiece4XY.value)[0] + 1][(playerPiece4XY.value)[1]])))
+    {
+        (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value.toString();
+        (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value.toString();
+        (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value.toString();
+        (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value.toString();
+        return false
+    }
+    else {
         return true
     }
+
+}
+
+const pieceInit = () => {
+    const currPiece = getRandomTetromino()
+    switch(currPiece){
+        case tetrominoI:
+            playerPiece1XY.value = [2, 3]
+            playerPiece2XY.value = [2, 4]
+            playerPiece3XY.value = [2, 5]
+            playerPiece4XY.value = [2, 6]
+            drawBlock.value = ['I']
+            break
+        case tetrominoO:
+            playerPiece1XY.value = [0, 4]
+            playerPiece2XY.value = [0, 5]
+            playerPiece3XY.value = [1, 4]
+            playerPiece4XY.value = [1, 5]
+            drawBlock.value = ['O']
+            break
+        case tetrominoJ:
+            playerPiece1XY.value = [0, 4]
+            playerPiece2XY.value = [1, 4]
+            playerPiece3XY.value = [1, 5]
+            playerPiece4XY.value = [1, 6]
+            drawBlock.value = ['J']
+            break
+        case tetrominoL:
+            playerPiece1XY.value = [1, 4]
+            playerPiece2XY.value = [1, 5]
+            playerPiece3XY.value = [1, 6]
+            playerPiece4XY.value = [0, 6]
+            drawBlock.value = ['L']
+            break
+        case tetrominoS:
+            drawBlock.value = ['S']
+            playerPiece1XY.value = [1, 4]
+            playerPiece2XY.value = [1, 5]
+            playerPiece3XY.value = [0, 5]
+            playerPiece4XY.value = [0, 6]
+            break
+        case tetrominoZ:
+            playerPiece1XY.value = [0, 4]
+            playerPiece2XY.value = [0, 5]
+            playerPiece3XY.value = [1, 5]
+            playerPiece4XY.value = [1, 6]
+            drawBlock.value = ['Z']
+            break
+        case tetrominoT:
+            playerPiece1XY.value = [1, 4]
+            playerPiece2XY.value = [1, 5]
+            playerPiece3XY.value = [1, 6]
+            playerPiece4XY.value = [0, 5]
+            drawBlock.value = ['T']
+            break
+    }
+    playerGravity
 }
 
 onMounted(() => {
     pieceInit()
 })
+
 </script>
 
 <template>
@@ -187,11 +205,10 @@ onMounted(() => {
 .cell{
     height: 30px;
     width: 30px;
-    border-radius: 4px;
     text-align: center;
-    font-size: 1rem;
     user-select: none;
     line-height: 4px;
+
 }
 
 .emptyCell{

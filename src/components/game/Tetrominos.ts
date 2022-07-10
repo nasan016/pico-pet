@@ -35,8 +35,8 @@ const tetrominoZ= [
 ]
 
 const tetrominoT= [
-    ['T', 'T', 'T'],
     ['.', 'T', '.'],
+    ['T', 'T', 'T'],
     ['.', '.', '.']
 ]
 

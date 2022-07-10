@@ -1,12 +1,11 @@
 import {ref} from "vue";
-import {tetrominoO} from "@/components/game/Tetrominos";
 
 const board = ref([
 // X: 0    1    2    3    4    5    6    7    8    9      Y:
-    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], //0 [Spawn Region]
-    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], //1 [Spawn Region]
-    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], //2 [Spawn Region]
-    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], //3 [Spawn Region]
+    [['.'], '.', '.', '.', '.', '.', '.', '.', '.', '.'], //0 [Spawn Region]
+    ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'], //1 [Spawn Region]
+    ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'], //2 [Spawn Region]
+    ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'], //3 [Spawn Region]
     ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'], //4
     ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'], //5
     ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'], //6
@@ -31,7 +30,7 @@ const board = ref([
 
 
 function getTetrominoColor(item : any){
-    switch (item) {
+    switch (item.toString()) {
         case "I":
             return "tetrominoI"
             break;
@@ -59,7 +58,12 @@ function getTetrominoColor(item : any){
     }
 }
 
+function isString(x : any) { 
+    return Object.prototype.toString.call(x) === "[object String]" 
+  } 
+
 export {
     board,
     getTetrominoColor,
+    isString
 }
