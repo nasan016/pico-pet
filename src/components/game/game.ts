@@ -1,5 +1,12 @@
 import {ref} from "vue";
 
+const shapes = ["I", "J", "L", "O", "S", "T", "Z"]
+
+function getRandomTetromino(){
+    const rng : number = Math.floor(Math.random() * shapes.length)
+    return shapes[rng]
+}
+
 const board = ref([
 // X: 0    1    2    3    4    5    6    7    8    9      Y:
     [['.'], '.', '.', '.', '.', '.', '.', '.', '.', '.'], //0 [Spawn Region]
@@ -65,5 +72,6 @@ function isString(x : any) {
 export {
     board,
     getTetrominoColor,
-    isString
+    isString,
+    getRandomTetromino
 }

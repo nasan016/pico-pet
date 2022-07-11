@@ -3,28 +3,109 @@ import { ref } from 'vue'
 import { onMounted } from 'vue'
 import NextDisplay from './stat-display/NextDisplay.vue'
 import StatDisplay from './stat-display/StatDisplay.vue'
-import {board, getTetrominoColor, isString} from "@/components/game/game";
-import { 
-    getRandomTetromino, 
-    tetrominoI, 
-    tetrominoO, 
-    tetrominoT, 
-    tetrominoZ, 
-    tetrominoS, 
-    tetrominoL, 
-    tetrominoJ } from './Tetrominos'
+import {board, getTetrominoColor, isString, getRandomTetromino} from "@/components/game/game";
 
 const playerPiece1XY = ref([0, 0])
 const playerPiece2XY = ref([0, 0])
 const playerPiece3XY = ref([0, 0])
 const playerPiece4XY = ref([0, 0])
 
-const placedPieces = ref([[-1, -1]])
 const drawBlock = ref([' '])
-const time = ref(80)
+const time = ref(100)
+
+const left = ref('ArrowLeft')
+const right = ref('ArrowRight')
+
+window.addEventListener('keydown', (e) => {
+    const key = e.key
+    if (key === left.value || key === right.value){
+        movePieceX(key)
+    }
+})
+
+function movePieceX(key : any){
+    if(key === right.value){
+        if(
+            (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1])))
+            || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1])))
+            || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1])))
+            || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1])))
+        ){
+            //pass
+        }
+        else if(
+        (playerPiece1XY.value)[1] > 8
+        || (playerPiece2XY.value)[1] > 8
+        || (playerPiece3XY.value)[1] > 8
+        || (playerPiece4XY.value)[1] > 8){
+        //pass
+    }
+        else{
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+            ((playerPiece1XY.value)[1]) = ((playerPiece1XY.value)[1]) + 1;
+            ((playerPiece2XY.value)[1]) = ((playerPiece2XY.value)[1]) + 1;
+            ((playerPiece3XY.value)[1]) = ((playerPiece3XY.value)[1]) + 1;
+            ((playerPiece4XY.value)[1]) = ((playerPiece4XY.value)[1]) + 1;
+
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+        }
+    } else if(key === left.value){
+        if(
+            (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1])))
+            || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1])))
+            || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1])))
+            || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1])))
+        ){
+            //pass
+        } else if(
+        (playerPiece1XY.value)[1] < 1
+        || (playerPiece2XY.value)[1] < 1
+        || (playerPiece3XY.value)[1] < 1
+        || (playerPiece4XY.value)[1] < 1){
+            //pass
+        }
+        else{
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+            ((playerPiece1XY.value)[1]) = ((playerPiece1XY.value)[1]) - 1;
+            ((playerPiece2XY.value)[1]) = ((playerPiece2XY.value)[1]) - 1;
+            ((playerPiece3XY.value)[1]) = ((playerPiece3XY.value)[1]) - 1;
+            ((playerPiece4XY.value)[1]) = ((playerPiece4XY.value)[1]) - 1;
+
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+        }
+    }
+}
 
 
 const gravity = () => {
+    if(!collisionDetection()){
+        clearInterval(playerGravity)
+        playerGravity = setInterval(gravity, time.value)
+        pieceInit()
+    }
+
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
@@ -39,20 +120,11 @@ const gravity = () => {
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
-
-        if(collisionDetection() === false){
-            clearInterval(playerGravity)
-            playerGravity = setInterval(gravity, time.value)
-            pieceInit()
-            console.log((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]])
-        }
-
 }
 
 let playerGravity = setInterval(gravity, time.value)
 
 const collisionDetection = () => {
-    
     if (
     (playerPiece1XY.value)[0] > 22
     || (playerPiece2XY.value)[0] > 22
@@ -65,14 +137,14 @@ const collisionDetection = () => {
         return false
     }
     else if(
-        ((board.value)[(playerPiece1XY.value)[0] + 1][(playerPiece1XY.value)[1]] !== '.' 
-            && isString((board.value)[(playerPiece1XY.value)[0] + 1][(playerPiece4XY.value)[1]]))
-        || ((board.value)[(playerPiece2XY.value)[0] + 1][(playerPiece2XY.value)[1]] !== '.' 
-            && isString((board.value)[(playerPiece2XY.value)[0] + 1][(playerPiece4XY.value)[1]]))
-        || ((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]] !== '.' 
-            && isString((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece4XY.value)[1]]))
-        || (((board.value)[(playerPiece4XY.value)[0] + 1][(playerPiece4XY.value)[1]] !== '.')
-            && isString((board.value)[(playerPiece4XY.value)[0] + 1][(playerPiece4XY.value)[1]])))
+        (((board.value)[(playerPiece1XY.value)[0] + 1][(playerPiece1XY.value)[1]] !== '.' 
+            && isString((board.value)[(playerPiece1XY.value)[0] + 1][(playerPiece1XY.value)[1]])))
+        || (((board.value)[(playerPiece2XY.value)[0] + 1][(playerPiece2XY.value)[1]] !== '.' 
+            && isString((board.value)[(playerPiece2XY.value)[0] + 1][(playerPiece2XY.value)[1]])))
+        || (((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]] !== '.' 
+            && isString((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]])))
+        || ((((board.value)[(playerPiece4XY.value)[0] + 1][(playerPiece4XY.value)[1]] !== '.')
+            && isString((board.value)[(playerPiece4XY.value)[0] + 1][(playerPiece4XY.value)[1]]))))
     {
         (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value.toString();
         (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value.toString();
@@ -89,49 +161,49 @@ const collisionDetection = () => {
 const pieceInit = () => {
     const currPiece = getRandomTetromino()
     switch(currPiece){
-        case tetrominoI:
+        case "I":
             playerPiece1XY.value = [2, 3]
             playerPiece2XY.value = [2, 4]
             playerPiece3XY.value = [2, 5]
             playerPiece4XY.value = [2, 6]
             drawBlock.value = ['I']
             break
-        case tetrominoO:
+        case "O":
             playerPiece1XY.value = [0, 4]
             playerPiece2XY.value = [0, 5]
             playerPiece3XY.value = [1, 4]
             playerPiece4XY.value = [1, 5]
             drawBlock.value = ['O']
             break
-        case tetrominoJ:
+        case "J":
             playerPiece1XY.value = [0, 4]
             playerPiece2XY.value = [1, 4]
             playerPiece3XY.value = [1, 5]
             playerPiece4XY.value = [1, 6]
             drawBlock.value = ['J']
             break
-        case tetrominoL:
+        case "L":
             playerPiece1XY.value = [1, 4]
             playerPiece2XY.value = [1, 5]
             playerPiece3XY.value = [1, 6]
             playerPiece4XY.value = [0, 6]
             drawBlock.value = ['L']
             break
-        case tetrominoS:
-            drawBlock.value = ['S']
+        case "S":
             playerPiece1XY.value = [1, 4]
             playerPiece2XY.value = [1, 5]
             playerPiece3XY.value = [0, 5]
             playerPiece4XY.value = [0, 6]
+            drawBlock.value = ['S']
             break
-        case tetrominoZ:
+        case "Z":
             playerPiece1XY.value = [0, 4]
             playerPiece2XY.value = [0, 5]
             playerPiece3XY.value = [1, 5]
             playerPiece4XY.value = [1, 6]
             drawBlock.value = ['Z']
             break
-        case tetrominoT:
+        case "T":
             playerPiece1XY.value = [1, 4]
             playerPiece2XY.value = [1, 5]
             playerPiece3XY.value = [1, 6]
@@ -145,7 +217,6 @@ const pieceInit = () => {
 onMounted(() => {
     pieceInit()
 })
-
 </script>
 
 <template>
