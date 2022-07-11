@@ -4,7 +4,10 @@
 <template>
 <div class="d-flex flex-column text">
     <div>VTris is just another Tetris clone.</div>
-    <div><br></div>
+      <br>
+    <div>It takes inspiration from the brutal gameplay mechanics of the</div>
+    <div>classic NES Tetris with some quality of life changes.</div>
+      <br>
     <div>It was built using <span style="color: #42b883">Vue.js</span> and <span style="color: #3178C6">TypeScript</span>.</div>
     <div>You can find the GitHub Repository <a href="github.com">here</a>.</div>
 </div>

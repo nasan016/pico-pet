@@ -10,18 +10,58 @@ const playerPiece2XY = ref([0, 0])
 const playerPiece3XY = ref([0, 0])
 const playerPiece4XY = ref([0, 0])
 
+const shadow1 = ref([0, 0])
+const shadow2 = ref([0, 0])
+const shadow3 = ref([0, 0])
+const shadow4 = ref([0, 0])
+
 const drawBlock = ref([' '])
-const time = ref(100)
+const drawShadow = ref([' '])
+const hardDropTime = ref(0)
+const time = ref(1000)
 
 const left = ref('ArrowLeft')
 const right = ref('ArrowRight')
+const hardDropKey = ref('ArrowUp')
 
 window.addEventListener('keydown', (e) => {
     const key = e.key
     if (key === left.value || key === right.value){
         movePieceX(key)
     }
+    else if (key === hardDropKey.value){
+        hardDrop()
+    } else if (key === 'ArrowDown'){
+        softDrop()
+    }
 })
+
+const softDrop = () => {
+     if(!collisionDetection()){
+        clearInterval(playerGravity)
+        playerGravity = setInterval(gravity, time.value)
+        pieceInit()
+    }
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    ((playerPiece1XY.value)[0]) = ((playerPiece1XY.value)[0]) + 1;
+    ((playerPiece2XY.value)[0]) = ((playerPiece2XY.value)[0]) + 1;
+    ((playerPiece3XY.value)[0]) = ((playerPiece3XY.value)[0]) + 1;
+    ((playerPiece4XY.value)[0]) = ((playerPiece4XY.value)[0]) + 1;
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+const hardDrop = () => {
+    clearInterval(playerGravity)
+    playerGravity = setInterval(gravity, hardDropTime.value)
+}
 
 function movePieceX(key : any){
     if(key === right.value){
@@ -98,7 +138,6 @@ function movePieceX(key : any){
     }
 }
 
-
 const gravity = () => {
     if(!collisionDetection()){
         clearInterval(playerGravity)
@@ -120,6 +159,7 @@ const gravity = () => {
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+
 }
 
 let playerGravity = setInterval(gravity, time.value)
@@ -167,6 +207,7 @@ const pieceInit = () => {
             playerPiece3XY.value = [2, 5]
             playerPiece4XY.value = [2, 6]
             drawBlock.value = ['I']
+            drawShadow.value = ['sI']
             break
         case "O":
             playerPiece1XY.value = [0, 4]
@@ -174,6 +215,7 @@ const pieceInit = () => {
             playerPiece3XY.value = [1, 4]
             playerPiece4XY.value = [1, 5]
             drawBlock.value = ['O']
+            drawShadow.value = ['sO']
             break
         case "J":
             playerPiece1XY.value = [0, 4]
@@ -181,6 +223,7 @@ const pieceInit = () => {
             playerPiece3XY.value = [1, 5]
             playerPiece4XY.value = [1, 6]
             drawBlock.value = ['J']
+            drawShadow.value = ['sJ']
             break
         case "L":
             playerPiece1XY.value = [1, 4]
@@ -188,6 +231,7 @@ const pieceInit = () => {
             playerPiece3XY.value = [1, 6]
             playerPiece4XY.value = [0, 6]
             drawBlock.value = ['L']
+            drawShadow.value = ['sL']
             break
         case "S":
             playerPiece1XY.value = [1, 4]
@@ -195,6 +239,7 @@ const pieceInit = () => {
             playerPiece3XY.value = [0, 5]
             playerPiece4XY.value = [0, 6]
             drawBlock.value = ['S']
+            drawShadow.value = ['sS']
             break
         case "Z":
             playerPiece1XY.value = [0, 4]
@@ -202,6 +247,7 @@ const pieceInit = () => {
             playerPiece3XY.value = [1, 5]
             playerPiece4XY.value = [1, 6]
             drawBlock.value = ['Z']
+            drawShadow.value = ['sZ']
             break
         case "T":
             playerPiece1XY.value = [1, 4]
@@ -209,6 +255,7 @@ const pieceInit = () => {
             playerPiece3XY.value = [1, 6]
             playerPiece4XY.value = [0, 5]
             drawBlock.value = ['T']
+            drawShadow.value = ['sT']
             break
     }
     playerGravity

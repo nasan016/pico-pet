@@ -59,6 +59,20 @@ function getTetrominoColor(item : any){
         case "T":
             return "tetrominoT"
             break;
+        case "sI":
+            break
+        case "sO":
+            break
+        case "sJ":
+            break
+        case "sL":
+            break
+        case "sS":
+            break
+        case "sZ":
+            break
+        case "sT":
+            break
         case ".":
             return "emptyCell"
             break;
