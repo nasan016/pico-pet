@@ -29,7 +29,7 @@
     <div class="d-flex align-center justify-center routerContainer">
       <router-view v-slot="{Component}">
       <transition name="slide-fade" mode="out-in">
-        <component :is="Component || NotFound"/>
+        <component :is="Component"/>
       </transition>
       </router-view>
     </div>

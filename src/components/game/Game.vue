@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { onMounted } from 'vue'
 import NextDisplay from './stat-display/NextDisplay.vue'
 import StatDisplay from './stat-display/StatDisplay.vue'
 import {board, getTetrominoColor, isString, getRandomTetromino} from "@/components/game/game";
@@ -10,19 +9,26 @@ const playerPiece2XY = ref([0, 0])
 const playerPiece3XY = ref([0, 0])
 const playerPiece4XY = ref([0, 0])
 
-const shadow1 = ref([0, 0])
-const shadow2 = ref([0, 0])
-const shadow3 = ref([0, 0])
-const shadow4 = ref([0, 0])
+// const shadow1 = ref([0, 0])
+// const shadow2 = ref([0, 0])
+// const shadow3 = ref([0, 0])
+// const shadow4 = ref([0, 0])
+
+let playerPiece = ''
 
 const drawBlock = ref([' '])
 const drawShadow = ref([' '])
 const hardDropTime = ref(0)
 const time = ref(1000)
+const rotationTracker = ref(0)
 
 const left = ref('ArrowLeft')
 const right = ref('ArrowRight')
 const hardDropKey = ref('ArrowUp')
+const softDropKey = ref('ArrowDown')
+const rotateLeft = ref('z')
+const rotateRight = ref('x')
+const rotationCounter = ref(0)
 
 window.addEventListener('keydown', (e) => {
     const key = e.key
@@ -31,37 +37,120 @@ window.addEventListener('keydown', (e) => {
     }
     else if (key === hardDropKey.value){
         hardDrop()
-    } else if (key === 'ArrowDown'){
+    } else if (key === softDropKey.value){
         softDrop()
+    } else if(key === rotateLeft.value || key === rotateRight.value){
+        rotationLeft(key)
     }
+    console.log(key)
 })
 
 const softDrop = () => {
-    if(!collisionDetection()){
-        clearInterval(playerGravity)
-        playerGravity = setInterval(gravity, time.value)
-        pieceInit()
-    }
-    
-    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
-    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
-    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
-    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
-
-    ((playerPiece1XY.value)[0]) = ((playerPiece1XY.value)[0]) + 1;
-    ((playerPiece2XY.value)[0]) = ((playerPiece2XY.value)[0]) + 1;
-    ((playerPiece3XY.value)[0]) = ((playerPiece3XY.value)[0]) + 1;
-    ((playerPiece4XY.value)[0]) = ((playerPiece4XY.value)[0]) + 1;
-
-    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
-    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
-    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
-    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+    gravity()
 }
 
 const hardDrop = () => {
     clearInterval(playerGravity)
     playerGravity = setInterval(gravity, hardDropTime.value)
+}
+
+const rotationI0 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    ((playerPiece1XY.value)[0]) = ((playerPiece3XY.value)[0]);
+    ((playerPiece2XY.value)[0]) = ((playerPiece3XY.value)[0]);
+    ((playerPiece4XY.value)[0]) = ((playerPiece3XY.value)[0]);
+
+    ((playerPiece1XY.value)[1]) = ((playerPiece3XY.value)[1] - 2);
+    ((playerPiece2XY.value)[1]) = ((playerPiece3XY.value)[1] - 1);
+    ((playerPiece4XY.value)[1]) = ((playerPiece3XY.value)[1] + 1);
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+const rotationI1 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    ((playerPiece1XY.value)[1]) = ((playerPiece3XY.value)[1]);
+    ((playerPiece2XY.value)[1]) = ((playerPiece3XY.value)[1]);
+    ((playerPiece4XY.value)[1]) = ((playerPiece3XY.value)[1]);
+
+    ((playerPiece1XY.value)[0]) = ((playerPiece3XY.value)[0] - 2);
+    ((playerPiece2XY.value)[0]) = ((playerPiece3XY.value)[0] - 1);
+    ((playerPiece4XY.value)[0]) = ((playerPiece3XY.value)[0]) + 1;
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+function rotationLeft(key : any) {
+    if(key === rotateLeft.value){
+        rotationCounter.value--
+    }else{
+        rotationCounter.value++
+    }
+    switch(playerPiece){
+        case 'I':
+            if(rotationCounter.value === -1){
+                rotationCounter.value = 1
+            } else if(rotationCounter.value === 2){
+                rotationCounter.value = 0
+            }
+            if(rotationCounter.value === 1){
+                rotationI1()
+            }
+            else{
+                rotationI0()
+            }
+    }
+}
+
+const rotationCollision = () => {
+    if(
+        (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1] !== '.' 
+        && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1])))
+        || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1] !== '.' 
+        && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1])))
+        || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.' 
+        && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1])))
+        || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1] !== '.' 
+        && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1])))
+    ){
+        return false
+    } else if(
+        (playerPiece1XY.value)[1] > 8
+        || (playerPiece2XY.value)[1] > 8
+        || (playerPiece3XY.value)[1] > 8
+        || (playerPiece4XY.value)[1] > 8){
+        return false
+    } else if(
+        (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1] !== '.' 
+        && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1])))
+        || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1] !== '.' 
+        && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1])))
+        || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1] !== '.' 
+        && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1])))
+        || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1] !== '.' 
+        && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1])))
+    ){
+        return false
+    }  else if(
+        (playerPiece1XY.value)[1] < 1
+        || (playerPiece2XY.value)[1] < 1
+        || (playerPiece3XY.value)[1] < 1
+        || (playerPiece4XY.value)[1] < 1){
+            return false
+        }
+    else{
+        return true
+    }
 }
 
 function movePieceX(key : any){
@@ -160,7 +249,6 @@ const gravity = () => {
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
-
 }
 
 let playerGravity = setInterval(gravity, time.value)
@@ -200,7 +288,8 @@ const collisionDetection = () => {
 }
 
 const pieceInit = () => {
-    const currPiece = getRandomTetromino()
+    const currPiece = "I"
+    playerPiece = currPiece
     switch(currPiece){
         case "I":
             playerPiece1XY.value = [2, 3]
@@ -211,10 +300,10 @@ const pieceInit = () => {
             drawShadow.value = ['sI']
             break
         case "O":
-            playerPiece1XY.value = [0, 4]
-            playerPiece2XY.value = [0, 5]
-            playerPiece3XY.value = [1, 4]
-            playerPiece4XY.value = [1, 5]
+            playerPiece1XY.value = [1, 4]
+            playerPiece2XY.value = [1, 5]
+            playerPiece3XY.value = [2, 4]
+            playerPiece4XY.value = [2, 5]
             drawBlock.value = ['O']
             drawShadow.value = ['sO']
             break
@@ -260,11 +349,10 @@ const pieceInit = () => {
             break
     }
     playerGravity
-}
+    }
 
-onMounted(() => {
-    pieceInit()
-})
+pieceInit()
+
 </script>
 
 <template>
@@ -297,6 +385,11 @@ onMounted(() => {
     padding-top: 50px;
 }
 
+.overlayButton{
+    position: absolute;
+    opacity: 50%;
+    color: black;
+}
 .hidden{
     display: none;
 }
@@ -314,8 +407,8 @@ onMounted(() => {
 .board{
     margin:20px;
     border-radius: 4px;
-    border: solid 1px #D5D6D8;
-    border-style: none solid none solid;
+    border: solid 2px #D5D6D8;
+    border-style: none solid solid solid;
     font-family:'Roboto Mono', monospace;
     font-size: 12px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
