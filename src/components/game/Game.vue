@@ -55,6 +55,22 @@ const hardDrop = () => {
 }
 
 const rotationI0 = () => {
+    if(
+    ((playerPiece3XY.value)[1]) - 2 < 0
+    || ((playerPiece3XY.value)[1]) - 1 < 0
+    || ((playerPiece3XY.value)[1]) + 1 < 0 
+    || ((playerPiece3XY.value)[1]) - 2 > 9
+    || ((playerPiece3XY.value)[1]) - 1 > 9
+    || ((playerPiece3XY.value)[1]) + 1 > 9
+    || ((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 2] !== '.'
+    && isString(((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 2]))
+    || (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1] !== '.'
+    && isString(((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1]))
+    || (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.'
+    && isString(((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1]))
+    )){
+        //pass
+    }else {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
@@ -70,9 +86,26 @@ const rotationI0 = () => {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+    }
 }
 
 const rotationI1 = () => {
+    if(
+    ((playerPiece3XY.value)[0]) - 2 < 0
+    || ((playerPiece3XY.value)[0]) - 1 < 0
+    || ((playerPiece3XY.value)[0]) + 1 < 0
+    || ((playerPiece3XY.value)[0]) - 2 > 23
+    || ((playerPiece3XY.value)[0]) - 1 > 23
+    || ((playerPiece3XY.value)[0]) + 1 > 23
+    || ((board.value)[(playerPiece3XY.value)[0] - 2][(playerPiece3XY.value)[1]] !== '.'
+    && isString(((board.value)[(playerPiece3XY.value)[0] - 2][(playerPiece3XY.value)[1]]))
+    || (board.value)[(playerPiece3XY.value)[0] - 1][(playerPiece3XY.value)[1]] !== '.'
+    && isString(((board.value)[(playerPiece3XY.value)[0] - 1][(playerPiece3XY.value)[1]]))
+    || (board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]] !== '.'
+    && isString(((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]]))
+    )){
+        //pass
+    }else{
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
@@ -83,11 +116,12 @@ const rotationI1 = () => {
 
     ((playerPiece1XY.value)[0]) = ((playerPiece3XY.value)[0] - 2);
     ((playerPiece2XY.value)[0]) = ((playerPiece3XY.value)[0] - 1);
-    ((playerPiece4XY.value)[0]) = ((playerPiece3XY.value)[0]) + 1;
-
+    ((playerPiece4XY.value)[0]) = ((playerPiece3XY.value)[0] + 1);
+    
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+    }
 }
 
 function rotationLeft(key : any) {
@@ -109,47 +143,6 @@ function rotationLeft(key : any) {
             else{
                 rotationI0()
             }
-    }
-}
-
-const rotationCollision = () => {
-    if(
-        (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1] !== '.' 
-        && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1])))
-        || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1] !== '.' 
-        && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1])))
-        || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.' 
-        && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1])))
-        || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1] !== '.' 
-        && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1])))
-    ){
-        return false
-    } else if(
-        (playerPiece1XY.value)[1] > 8
-        || (playerPiece2XY.value)[1] > 8
-        || (playerPiece3XY.value)[1] > 8
-        || (playerPiece4XY.value)[1] > 8){
-        return false
-    } else if(
-        (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1] !== '.' 
-        && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1])))
-        || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1] !== '.' 
-        && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1])))
-        || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1] !== '.' 
-        && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1])))
-        || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1] !== '.' 
-        && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1])))
-    ){
-        return false
-    }  else if(
-        (playerPiece1XY.value)[1] < 1
-        || (playerPiece2XY.value)[1] < 1
-        || (playerPiece3XY.value)[1] < 1
-        || (playerPiece4XY.value)[1] < 1){
-            return false
-        }
-    else{
-        return true
     }
 }
 
