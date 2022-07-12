@@ -37,11 +37,12 @@ window.addEventListener('keydown', (e) => {
 })
 
 const softDrop = () => {
-     if(!collisionDetection()){
+    if(!collisionDetection()){
         clearInterval(playerGravity)
         playerGravity = setInterval(gravity, time.value)
         pieceInit()
     }
+    
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';

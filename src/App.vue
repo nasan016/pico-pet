@@ -27,9 +27,11 @@
   </div>
   <div class="d-flex justify-center appColor">
     <div class="d-flex align-center justify-center routerContainer">
-      <transition name="fade">
-        <router-view/>
+      <router-view v-slot="{Component}">
+      <transition name="slide-fade" mode="out-in">
+        <component :is="Component"/>
       </transition>
+      </router-view>
     </div>
 
   </div>
@@ -40,13 +42,17 @@
 @import './assets/base.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.slide-fade-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
   opacity: 0;
 }
 
