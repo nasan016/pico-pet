@@ -128,6 +128,7 @@ const rotationI1 = () => {
 const rotationS0 = () => {
     if(
         ((playerPiece3XY.value)[1]) - 2 < 0
+        ||((playerPiece3XY.value)[1]) + 1 > 9
     ){
         //pass
     }else{
@@ -167,9 +168,54 @@ const rotationS1 = () => {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
 
-    console.log(playerPiece1XY.value)
-    console.log(playerPiece3XY.value)
+const rotationZ0 = () => {
+            if(
+        ((playerPiece2XY.value)[1]) + 1 > 9
+    ){}
+    else{
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+    }
+}
+
+const rotationZ1 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+
 }
 
 //S + Z = 2 rotations
@@ -211,6 +257,18 @@ function rotationLeft(key : any) {
                 rotationS1()
             }else{
                 rotationS0()
+            }
+            break
+        case 'Z':
+            if(rotationCounter.value === -1){
+                rotationCounter.value = 1
+            } else if(rotationCounter.value === 2){
+                rotationCounter.value = 0
+            }
+            if(rotationCounter.value === 1){
+                rotationZ1()
+            }else{
+                rotationZ0()
             }
             break
     }
@@ -354,9 +412,9 @@ const collisionDetection = () => {
 
 }
 const pieceInit = () => {
-    const currPiece = "S"
+    const currPiece = "Z"
     playerPiece = currPiece
-    console.log(playerPiece)
+
     switch(currPiece){
         case "I":
             playerPiece1XY.value = [2, 3]
