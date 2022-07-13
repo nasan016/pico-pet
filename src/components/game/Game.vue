@@ -211,6 +211,23 @@ function rotation(key : any) {
             }else if(rotationCounter.value === 3){
                 rotationL3()
             }
+            break
+        case 'J':
+            if(rotationCounter.value === 4){
+                rotationCounter.value = 0
+            }else if(rotationCounter.value === -1){
+                rotationCounter.value = 3
+            }
+            if(rotationCounter.value === 0){
+                rotationJ0()
+            }else if(rotationCounter.value === 1){
+                rotationJ1()
+            }else if(rotationCounter.value === 2){
+                rotationJ2()
+            }else if(rotationCounter.value === 3){
+                rotationJ3()
+            }
+            break
     }
         console.log(rotationCounter.value)
 }
@@ -560,19 +577,87 @@ const rotationL3 = () => {
 
 //J PIECE START
 const rotationJ0 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
 
+    [(playerPiece1XY.value)[1]] = [(playerPiece3XY.value)[1] - 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece3XY.value)[0] - 1];
+
+    [(playerPiece2XY.value)[1]] = [(playerPiece3XY.value)[1] - 1];
+    [(playerPiece2XY.value)[0]] = [(playerPiece3XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece3XY.value)[1] + 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece3XY.value)[0]];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
 
 const rotationJ1 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
 
+    [(playerPiece1XY.value)[1]] = [(playerPiece3XY.value)[1] + 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece3XY.value)[0] - 1];
+
+    [(playerPiece2XY.value)[1]] = [(playerPiece3XY.value)[1]];
+    [(playerPiece2XY.value)[0]] = [(playerPiece3XY.value)[0] - 1];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece3XY.value)[1]];
+    [(playerPiece4XY.value)[0]] = [(playerPiece3XY.value)[0] + 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
 
 const rotationJ2 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
 
+    [(playerPiece1XY.value)[1]] = [(playerPiece3XY.value)[1] + 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece3XY.value)[0] + 1];
+
+    [(playerPiece2XY.value)[1]] = [(playerPiece3XY.value)[1] + 1];
+    [(playerPiece2XY.value)[0]] = [(playerPiece3XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece3XY.value)[1] - 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece3XY.value)[0]];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
 
 const rotationJ3 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
 
+    [(playerPiece1XY.value)[1]] = [(playerPiece3XY.value)[1] -1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece3XY.value)[0] + 1];
+
+    [(playerPiece2XY.value)[1]] = [(playerPiece3XY.value)[1]];
+    [(playerPiece2XY.value)[0]] = [(playerPiece3XY.value)[0] + 1];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece3XY.value)[1]];
+    [(playerPiece4XY.value)[0]] = [(playerPiece3XY.value)[0] - 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
 //J PIECE END
 //ROTATIONS END
@@ -641,7 +726,7 @@ const collisionDetection = () => {
 }
 
 const pieceInit = () => {
-    const currPiece = "L"
+    const currPiece = "J"
     playerPiece = currPiece
 
     switch(currPiece){
