@@ -40,7 +40,7 @@ window.addEventListener('keydown', (e) => {
     } else if (key === softDropKey.value){
         softDrop()
     } else if(key === rotateLeft.value || key === rotateRight.value){
-        rotationLeft(key)
+        rotation(key)
     }
     console.log(key)
 })
@@ -218,10 +218,92 @@ const rotationZ1 = () => {
 
 }
 
-//S + Z = 2 rotations
+const rotationT0 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+const rotationT1 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+const rotationT2 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+const rotationT3 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
 // L + S + T = 4 rotations
 //ROTATIONS
-function rotationLeft(key : any) {
+function rotation(key : any) {
     if(key === rotateLeft.value){
         rotationCounter.value--
     }else{
@@ -271,6 +353,21 @@ function rotationLeft(key : any) {
                 rotationZ0()
             }
             break
+        case 'T':
+            if(rotationCounter.value === 4){
+                rotationCounter.value = 0
+            }else if(rotationCounter.value === -1){
+                rotationCounter.value = 3
+            }
+            if(rotationCounter.value === 0){
+                rotationT0()
+            }else if(rotationCounter.value === 1){
+                rotationT1()
+            }else if(rotationCounter.value === 2){
+                rotationT2()
+            }else if(rotationCounter.value === 3){
+                rotationT3()
+            }
     }
         console.log(rotationCounter.value)
 }
@@ -412,7 +509,7 @@ const collisionDetection = () => {
 
 }
 const pieceInit = () => {
-    const currPiece = "Z"
+    const currPiece = "T"
     playerPiece = currPiece
 
     switch(currPiece){
@@ -449,18 +546,18 @@ const pieceInit = () => {
             drawShadow.value = ['sL']
             break
         case "S":
-            playerPiece1XY.value = [1, 4]
-            playerPiece2XY.value = [1, 5]
-            playerPiece3XY.value = [0, 5]
-            playerPiece4XY.value = [0, 6]
+            playerPiece1XY.value = [2, 4]
+            playerPiece2XY.value = [2, 5]
+            playerPiece3XY.value = [1, 5]
+            playerPiece4XY.value = [1, 6]
             drawBlock.value = ['S']
             drawShadow.value = ['sS']
             break
         case "Z":
-            playerPiece1XY.value = [0, 4]
-            playerPiece2XY.value = [0, 5]
-            playerPiece3XY.value = [1, 5]
-            playerPiece4XY.value = [1, 6]
+            playerPiece1XY.value = [1, 4]
+            playerPiece2XY.value = [1, 5]
+            playerPiece3XY.value = [2, 5]
+            playerPiece4XY.value = [2, 6]
             drawBlock.value = ['Z']
             drawShadow.value = ['sZ']
             break
