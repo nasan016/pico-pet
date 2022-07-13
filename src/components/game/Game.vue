@@ -30,6 +30,7 @@ const rotateLeft = ref('z')
 const rotateRight = ref('x')
 const rotationCounter = ref(0)
 
+//KEYPRESSES START
 window.addEventListener('keydown', (e) => {
     const key = e.key
     if (key === left.value || key === right.value){
@@ -54,7 +55,169 @@ const hardDrop = () => {
     playerGravity = setInterval(gravity, hardDropTime.value)
 }
 
-//ROTATIONS
+function movePieceX(key : any){
+    if(key === right.value){
+        if(
+            (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1])))
+            || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1])))
+            || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1])))
+            || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1] !== '.' 
+            && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1])))
+        ){
+            //pass
+        }
+        else if(
+        (playerPiece1XY.value)[1] > 8
+        || (playerPiece2XY.value)[1] > 8
+        || (playerPiece3XY.value)[1] > 8
+        || (playerPiece4XY.value)[1] > 8){
+        //pass
+    }
+        else{
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+            ((playerPiece1XY.value)[1]) = ((playerPiece1XY.value)[1]) + 1;
+            ((playerPiece2XY.value)[1]) = ((playerPiece2XY.value)[1]) + 1;
+            ((playerPiece3XY.value)[1]) = ((playerPiece3XY.value)[1]) + 1;
+            ((playerPiece4XY.value)[1]) = ((playerPiece4XY.value)[1]) + 1;
+
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+        }
+    } else if(key === left.value){
+        if(
+            (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1])))
+            || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1])))
+            || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1])))
+            || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1] !== '.' 
+            && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1])))
+        ){
+            //pass
+        } else if(
+        (playerPiece1XY.value)[1] < 1
+        || (playerPiece2XY.value)[1] < 1
+        || (playerPiece3XY.value)[1] < 1
+        || (playerPiece4XY.value)[1] < 1){
+            //pass
+        }
+        else{
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+            ((playerPiece1XY.value)[1]) = ((playerPiece1XY.value)[1]) - 1;
+            ((playerPiece2XY.value)[1]) = ((playerPiece2XY.value)[1]) - 1;
+            ((playerPiece3XY.value)[1]) = ((playerPiece3XY.value)[1]) - 1;
+            ((playerPiece4XY.value)[1]) = ((playerPiece4XY.value)[1]) - 1;
+
+            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+        }
+    }
+}
+
+function rotation(key : any) {
+    if(key === rotateLeft.value){
+        rotationCounter.value--
+    }else{
+        rotationCounter.value++
+    }
+    switch(playerPiece){
+        case 'I':
+            if(rotationCounter.value === -1){
+                rotationCounter.value = 1
+            } else if(rotationCounter.value === 2){
+                rotationCounter.value = 0
+            }
+            if(rotationCounter.value === 1){
+                rotationI1()
+                if(rotationI1()){
+                    rotationCounter.value = 1
+                }
+            }
+            else{
+                rotationI0()
+                if(rotationI0()){
+                    rotationCounter.value = 0
+                }
+            }
+            break
+        case 'S':
+            if(rotationCounter.value === -1){
+                rotationCounter.value = 1
+            } else if(rotationCounter.value === 2){
+                rotationCounter.value = 0
+            }
+            if(rotationCounter.value === 1){
+                rotationS1()
+            }else{
+                rotationS0()
+            }
+            break
+        case 'Z':
+            if(rotationCounter.value === -1){
+                rotationCounter.value = 1
+            } else if(rotationCounter.value === 2){
+                rotationCounter.value = 0
+            }
+            if(rotationCounter.value === 1){
+                rotationZ1()
+            }else{
+                rotationZ0()
+            }
+            break
+        case 'T':
+            if(rotationCounter.value === 4){
+                rotationCounter.value = 0
+            }else if(rotationCounter.value === -1){
+                rotationCounter.value = 3
+            }
+            if(rotationCounter.value === 0){
+                rotationT0()
+            }else if(rotationCounter.value === 1){
+                rotationT1()
+            }else if(rotationCounter.value === 2){
+                rotationT2()
+            }else if(rotationCounter.value === 3){
+                rotationT3()
+            }
+            break
+        case 'L':
+            if(rotationCounter.value === 4){
+                rotationCounter.value = 0
+            }else if(rotationCounter.value === -1){
+                rotationCounter.value = 3
+            }
+            if(rotationCounter.value === 0){
+                rotationL0()
+            }else if(rotationCounter.value === 1){
+                rotationL1()
+            }else if(rotationCounter.value === 2){
+                rotationL2()
+            }else if(rotationCounter.value === 3){
+                rotationL3()
+            }
+    }
+        console.log(rotationCounter.value)
+}
+//KEY PRESSES END
+
+//ROTATIONS START
+//I PIECE START
 const rotationI0 = () => {
     if(
     ((playerPiece3XY.value)[1]) - 2 < 0
@@ -124,7 +287,9 @@ const rotationI1 = () => {
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
     }
 }
+//I PIECE END
 
+//S PIECE START
 const rotationS0 = () => {
     if(
         ((playerPiece3XY.value)[1]) - 2 < 0
@@ -169,7 +334,9 @@ const rotationS1 = () => {
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
+//S PIECE END
 
+//Z PIECE START
 const rotationZ0 = () => {
             if(
         ((playerPiece2XY.value)[1]) + 1 > 9
@@ -217,7 +384,9 @@ const rotationZ1 = () => {
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 
 }
+//Z PIECE END
 
+//T PIECE START
 const rotationT0 = () => {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
@@ -301,152 +470,114 @@ const rotationT3 = () => {
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
-// L + S + T = 4 rotations
-//ROTATIONS
-function rotation(key : any) {
-    if(key === rotateLeft.value){
-        rotationCounter.value--
-    }else{
-        rotationCounter.value++
-    }
-    switch(playerPiece){
-        case 'I':
-            if(rotationCounter.value === -1){
-                rotationCounter.value = 1
-            } else if(rotationCounter.value === 2){
-                rotationCounter.value = 0
-            }
-            if(rotationCounter.value === 1){
-                rotationI1()
-                if(rotationI1()){
-                    rotationCounter.value = 1
-                }
-            }
-            else{
-                rotationI0()
-                if(rotationI0()){
-                    rotationCounter.value = 0
-                }
-            }
-            break
-        case 'S':
-            if(rotationCounter.value === -1){
-                rotationCounter.value = 1
-            } else if(rotationCounter.value === 2){
-                rotationCounter.value = 0
-            }
-            if(rotationCounter.value === 1){
-                rotationS1()
-            }else{
-                rotationS0()
-            }
-            break
-        case 'Z':
-            if(rotationCounter.value === -1){
-                rotationCounter.value = 1
-            } else if(rotationCounter.value === 2){
-                rotationCounter.value = 0
-            }
-            if(rotationCounter.value === 1){
-                rotationZ1()
-            }else{
-                rotationZ0()
-            }
-            break
-        case 'T':
-            if(rotationCounter.value === 4){
-                rotationCounter.value = 0
-            }else if(rotationCounter.value === -1){
-                rotationCounter.value = 3
-            }
-            if(rotationCounter.value === 0){
-                rotationT0()
-            }else if(rotationCounter.value === 1){
-                rotationT1()
-            }else if(rotationCounter.value === 2){
-                rotationT2()
-            }else if(rotationCounter.value === 3){
-                rotationT3()
-            }
-    }
-        console.log(rotationCounter.value)
+//T PIECE END
+
+//L PIECE START
+const rotationL0 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
 
-function movePieceX(key : any){
-    if(key === right.value){
-        if(
-            (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1] !== '.' 
-            && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] + 1])))
-            || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1] !== '.' 
-            && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] + 1])))
-            || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.' 
-            && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1])))
-            || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1] !== '.' 
-            && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] + 1])))
-        ){
-            //pass
-        }
-        else if(
-        (playerPiece1XY.value)[1] > 8
-        || (playerPiece2XY.value)[1] > 8
-        || (playerPiece3XY.value)[1] > 8
-        || (playerPiece4XY.value)[1] > 8){
-        //pass
-    }
-        else{
-            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
-            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
-            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
-            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+const rotationL1 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
 
-            ((playerPiece1XY.value)[1]) = ((playerPiece1XY.value)[1]) + 1;
-            ((playerPiece2XY.value)[1]) = ((playerPiece2XY.value)[1]) + 1;
-            ((playerPiece3XY.value)[1]) = ((playerPiece3XY.value)[1]) + 1;
-            ((playerPiece4XY.value)[1]) = ((playerPiece4XY.value)[1]) + 1;
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
 
-            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
-            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
-            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
-            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
-        }
-    } else if(key === left.value){
-        if(
-            (((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1] !== '.' 
-            && isString((board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1] - 1])))
-            || (((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1] !== '.' 
-            && isString((board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1] - 1])))
-            || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1] !== '.' 
-            && isString((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1])))
-            || (((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1] !== '.' 
-            && isString((board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1] - 1])))
-        ){
-            //pass
-        } else if(
-        (playerPiece1XY.value)[1] < 1
-        || (playerPiece2XY.value)[1] < 1
-        || (playerPiece3XY.value)[1] < 1
-        || (playerPiece4XY.value)[1] < 1){
-            //pass
-        }
-        else{
-            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
-            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
-            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
-            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
 
-            ((playerPiece1XY.value)[1]) = ((playerPiece1XY.value)[1]) - 1;
-            ((playerPiece2XY.value)[1]) = ((playerPiece2XY.value)[1]) - 1;
-            ((playerPiece3XY.value)[1]) = ((playerPiece3XY.value)[1]) - 1;
-            ((playerPiece4XY.value)[1]) = ((playerPiece4XY.value)[1]) - 1;
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
 
-            (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
-            (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
-            (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
-            (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
-        }
-    }
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
 }
 
+const rotationL2 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1] + 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+
+const rotationL3 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece1XY.value)[0]] = [(playerPiece2XY.value)[0] + 1];
+
+    [(playerPiece3XY.value)[1]] = [(playerPiece2XY.value)[1]];
+    [(playerPiece3XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece2XY.value)[1] - 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece2XY.value)[0] - 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+}
+//L PIECE END
+
+//J PIECE START
+const rotationJ0 = () => {
+
+}
+
+const rotationJ1 = () => {
+
+}
+
+const rotationJ2 = () => {
+
+}
+
+const rotationJ3 = () => {
+
+}
+//J PIECE END
+//ROTATIONS END
+
+//BOARD LOGIC START
 const gravity = () => {
     if(!collisionDetection()){
         clearInterval(playerGravity)
@@ -508,8 +639,9 @@ const collisionDetection = () => {
     }
 
 }
+
 const pieceInit = () => {
-    const currPiece = "T"
+    const currPiece = "L"
     playerPiece = currPiece
 
     switch(currPiece){
@@ -572,7 +704,7 @@ const pieceInit = () => {
     }
     playerGravity
     }
-
+//BOARD LOGIC END
 pieceInit()
 
 </script>
@@ -656,14 +788,14 @@ pieceInit()
 }
 
 .tetrominoL{
-    background-image: linear-gradient(#3F83E9, #6B2ED3);
+    background-image: linear-gradient(#F0853C, #E1520D);
     border: solid 1px white;
     border-radius: 4px;
     color: rgba(255,255,255, 0);
 }
 
 .tetrominoJ{
-    background-image: linear-gradient(#F0853C, #E1520D);
+    background-image: linear-gradient(#3F83E9, #6B2ED3);
     border: solid 1px white;
     border-radius: 4px;
     color: rgba(255,255,255, 0);
