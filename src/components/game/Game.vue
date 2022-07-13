@@ -54,6 +54,7 @@ const hardDrop = () => {
     playerGravity = setInterval(gravity, hardDropTime.value)
 }
 
+//ROTATIONS
 const rotationI0 = () => {
     if(
     ((playerPiece3XY.value)[1]) - 2 < 0
@@ -69,7 +70,7 @@ const rotationI0 = () => {
     || (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.'
     && isString(((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1]))
     )){
-        //pass
+        return true
     }else {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
@@ -104,7 +105,7 @@ const rotationI1 = () => {
     || (board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]] !== '.'
     && isString(((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]]))
     )){
-        //pass
+        return true
     }else{
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
@@ -125,32 +126,55 @@ const rotationI1 = () => {
 }
 
 const rotationS0 = () => {
+    if(
+        ((playerPiece3XY.value)[1]) - 2 < 0
+    ){
+        //pass
+    }else{
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
 
-    [(playerPiece1XY.value)[1]] = [(playerPiece1XY.value)[1] - 1];
-    [(playerPiece1XY.value)[0]] = [(playerPiece1XY.value)[0] + 2];
-    [(playerPiece2XY.value)[1]] = [(playerPiece2XY.value[1]) - 1];
+    [(playerPiece1XY.value)[1]] = [(playerPiece3XY.value)[1] - 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece3XY.value)[0] + 1];
+
+    [(playerPiece2XY.value)[1]] = [(playerPiece3XY.value)[1]];
+    [(playerPiece2XY.value)[0]] = [(playerPiece3XY.value)[0] + 1];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece3XY.value)[1] + 1];
+    [(playerPiece4XY.value)[0]] = [(playerPiece3XY.value)[0]];
 
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+    }
 }
 
 const rotationS1 = () => {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
 
-    [(playerPiece1XY.value)[1]] = [(playerPiece1XY.value)[1] + 1];
-    [(playerPiece1XY.value)[0]] = [(playerPiece1XY.value)[0] - 2];
-    [(playerPiece2XY.value)[1]] = [(playerPiece2XY.value[1]) + 1];
+    [(playerPiece1XY.value)[1]] = [(playerPiece3XY.value)[1] - 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece3XY.value)[0] - 1];
+
+    [(playerPiece2XY.value)[1]] = [(playerPiece3XY.value)[1] - 1];
+    [(playerPiece2XY.value)[0]] = [(playerPiece3XY.value)[0]];
+
+    [(playerPiece4XY.value)[1]] = [(playerPiece3XY.value)[1]];
+    [(playerPiece4XY.value)[0]] = [(playerPiece3XY.value)[0] + 1];
 
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+
+    console.log(playerPiece1XY.value)
+    console.log(playerPiece3XY.value)
 }
 
 //S + Z = 2 rotations
 // L + S + T = 4 rotations
-
+//ROTATIONS
 function rotationLeft(key : any) {
     if(key === rotateLeft.value){
         rotationCounter.value--
@@ -166,10 +190,17 @@ function rotationLeft(key : any) {
             }
             if(rotationCounter.value === 1){
                 rotationI1()
+                if(rotationI1()){
+                    rotationCounter.value = 1
+                }
             }
             else{
                 rotationI0()
+                if(rotationI0()){
+                    rotationCounter.value = 0
+                }
             }
+            break
         case 'S':
             if(rotationCounter.value === -1){
                 rotationCounter.value = 1
@@ -181,7 +212,9 @@ function rotationLeft(key : any) {
             }else{
                 rotationS0()
             }
+            break
     }
+        console.log(rotationCounter.value)
 }
 
 function movePieceX(key : any){
@@ -320,10 +353,10 @@ const collisionDetection = () => {
     }
 
 }
-
 const pieceInit = () => {
     const currPiece = "S"
     playerPiece = currPiece
+    console.log(playerPiece)
     switch(currPiece){
         case "I":
             playerPiece1XY.value = [2, 3]
