@@ -124,6 +124,33 @@ const rotationI1 = () => {
     }
 }
 
+const rotationS0 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece1XY.value)[1] - 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece1XY.value)[0] + 2];
+    [(playerPiece2XY.value)[1]] = [(playerPiece2XY.value[1]) - 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+}
+
+const rotationS1 = () => {
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
+
+    [(playerPiece1XY.value)[1]] = [(playerPiece1XY.value)[1] + 1];
+    [(playerPiece1XY.value)[0]] = [(playerPiece1XY.value)[0] - 2];
+    [(playerPiece2XY.value)[1]] = [(playerPiece2XY.value[1]) + 1];
+
+    (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
+    (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
+}
+
+//S + Z = 2 rotations
+// L + S + T = 4 rotations
+
 function rotationLeft(key : any) {
     if(key === rotateLeft.value){
         rotationCounter.value--
@@ -142,6 +169,17 @@ function rotationLeft(key : any) {
             }
             else{
                 rotationI0()
+            }
+        case 'S':
+            if(rotationCounter.value === -1){
+                rotationCounter.value = 1
+            } else if(rotationCounter.value === 2){
+                rotationCounter.value = 0
+            }
+            if(rotationCounter.value === 1){
+                rotationS1()
+            }else{
+                rotationS0()
             }
     }
 }
@@ -256,6 +294,7 @@ const collisionDetection = () => {
         (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value.toString();
         (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value.toString();
         (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value.toString();
+        rotationCounter.value = 0
         return false
     }
     else if(
@@ -272,7 +311,9 @@ const collisionDetection = () => {
         (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value.toString();
         (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value.toString();
         (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value.toString();
+        rotationCounter.value = 0
         return false
+
     }
     else {
         return true
@@ -281,7 +322,7 @@ const collisionDetection = () => {
 }
 
 const pieceInit = () => {
-    const currPiece = "I"
+    const currPiece = "S"
     playerPiece = currPiece
     switch(currPiece){
         case "I":
