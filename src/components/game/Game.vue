@@ -43,7 +43,6 @@ window.addEventListener('keydown', (e) => {
     } else if(key === rotateLeft.value || key === rotateRight.value){
         rotation(key)
     }
-    console.log(key)
 })
 
 const softDrop = () => {
@@ -229,7 +228,6 @@ function rotation(key : any) {
             }
             break
     }
-        console.log(rotationCounter.value)
 }
 //KEY PRESSES END
 
@@ -311,7 +309,13 @@ const rotationS0 = () => {
     if(
         ((playerPiece3XY.value)[1]) - 2 < 0
         ||((playerPiece3XY.value)[1]) + 1 > 9
-    ){
+        || (((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1] - 1] !== '.')
+        && isString(((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1] - 1])))
+        || (((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]] !== '.')
+        && isString(((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]]))
+        || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1] !== '.'
+        && isString(((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] + 1]))))
+    )){
         //pass
     }else{
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
@@ -334,6 +338,16 @@ const rotationS0 = () => {
 }
 
 const rotationS1 = () => {
+    if(
+        (((board.value)[(playerPiece3XY.value)[0] - 1][(playerPiece3XY.value)[1] - 1] !== '.')
+        && isString(((board.value)[(playerPiece3XY.value)[0] - 1][(playerPiece3XY.value)[1] - 1])))
+        || (((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1] !== '.')
+        && isString(((board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1] - 1]))
+        || (((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]] !== '.'
+        && isString(((board.value)[(playerPiece3XY.value)[0] + 1][(playerPiece3XY.value)[1]]))))
+    )){
+
+    }else{
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = '.';
@@ -350,14 +364,17 @@ const rotationS1 = () => {
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+    }
 }
 //S PIECE END
 
 //Z PIECE START
 const rotationZ0 = () => {
-            if(
+    if(
         ((playerPiece2XY.value)[1]) + 1 > 9
-    ){}
+    ){
+
+    }
     else{
     (board.value)[(playerPiece1XY.value)[0]][(playerPiece1XY.value)[1]] = '.';
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = '.';
@@ -684,9 +701,29 @@ const gravity = () => {
     (board.value)[(playerPiece2XY.value)[0]][(playerPiece2XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value;
     (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value;
+
 }
 
 let playerGravity = setInterval(gravity, time.value)
+
+const linesCleared = () => {
+    let counter = 0
+    let totalLinesCleared = 0
+    for(let i = 0; i < board.value.length; i++){
+        for(let j = 0; j < (board.value)[i].length; j++){
+            if((board.value)[i][j] !== '.'){
+                counter++
+            if(counter === 10){
+                board.value.splice(i, 1)
+                board.value.splice(0, 0, ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'])
+                totalLinesCleared ++
+            }
+            }
+        }
+        counter = 0
+    }
+    totalLinesCleared = 0
+}
 
 const collisionDetection = () => {
     if (
@@ -699,6 +736,7 @@ const collisionDetection = () => {
         (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value.toString();
         (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value.toString();
         rotationCounter.value = 0
+        linesCleared()
         return false
     }
     else if(
@@ -716,17 +754,17 @@ const collisionDetection = () => {
         (board.value)[(playerPiece3XY.value)[0]][(playerPiece3XY.value)[1]] = drawBlock.value.toString();
         (board.value)[(playerPiece4XY.value)[0]][(playerPiece4XY.value)[1]] = drawBlock.value.toString();
         rotationCounter.value = 0
+        linesCleared()
         return false
 
     }
     else {
         return true
     }
-
 }
 
 const pieceInit = () => {
-    const currPiece = "J"
+    const currPiece = "I"
     playerPiece = currPiece
 
     switch(currPiece){
@@ -912,5 +950,61 @@ pieceInit()
     border: solid 1px white;
     border-radius: 4px;
     color: rgba(255,255,255, 0);
+}
+
+.tetrominosI{
+    background-image: linear-gradient(#68EFCE, #4DB5FA);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+    opacity: 45%;
+}
+
+.tetrominosL{
+    background-image: linear-gradient(#F0853C, #E1520D);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+    opacity: 45%;
+}
+
+.tetrominosJ{
+    background-image: linear-gradient(#3F83E9, #6B2ED3);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+    opacity: 45%;
+}
+
+.tetrominosO{
+    background-image: linear-gradient(#FFE080, #FFAF78);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+    opacity: 45%;
+}
+
+.tetrominosS{
+    background-image: linear-gradient(#02EA45, #369739);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+    opacity: 45%;
+}
+
+.tetrominosZ{
+    background-image: linear-gradient(#ED354C, #A41E36);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+    opacity: 45%;
+}
+
+.tetrominosT{
+    background-image: linear-gradient(#AE00D5, #7A0BB3);
+    border: solid 1px white;
+    border-radius: 4px;
+    color: rgba(255,255,255, 0);
+    opacity: 45%;
 }
 </style>
