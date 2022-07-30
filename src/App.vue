@@ -38,5 +38,12 @@
 
 <style>
 @import './assets/base.css';
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+#app{
+font-family: 'Press Start 2P', cursive;
+background: black;
+color: white;
+height: 100vh;
+}
 </style>
