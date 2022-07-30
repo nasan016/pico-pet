@@ -5,12 +5,13 @@ import MenuButton from "../components/MenuButton.vue"
 <template>
 <div class="d-flex flex-column align-center justify-center container pb-16">
     <div class="pl-14">
-    <div class="glitch heading title" data-text="PICO-PET">PICO-PET</div>
+        <div class="glitch heading title" data-text="PICO-PET">PICO-PET</div>
     </div>
     <div class="glitch heading subtext" data-text="say hello to your new friend!">say hello to your new friend!</div>
     <div class="pt-8">
-    <MenuButton title="Start"/>
-    <MenuButton title="Credits"/>
+        <MenuButton title="Start"/>
+        <MenuButton title="Settings"/>
+        <MenuButton title="Credits"/>
     </div>
 </div>
 </template>
