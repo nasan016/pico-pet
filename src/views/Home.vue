@@ -9,9 +9,13 @@ import MenuButton from "../components/MenuButton.vue"
     </div>
     <div class="glitch heading subtext" data-text="say hello to your new friend!">say hello to your new friend!</div>
     <div class="pt-8">
-        <MenuButton title="Start"/>
+        <router-link to="/game"  style="text-decoration: none; color: inherit;">
+            <MenuButton title="Start"/>
+        </router-link>
         <MenuButton title="Settings"/>
-        <MenuButton title="Credits"/>
+        <router-link to="/credits"  style="text-decoration: none; color: inherit;">
+            <MenuButton title="Credits"/>
+        </router-link>
     </div>
 </div>
 </template>

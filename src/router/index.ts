@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
+import Credits from '../views/Credits.vue'
+import Game from '../views/Game.vue'
 import NotFound from '../views/NotFound.vue'
 
 const router = createRouter({
@@ -12,9 +13,14 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About
+      path: '/credits',
+      name: 'credits',
+      component: Credits
+    },
+    {
+      path: '/game',
+      name: 'game',
+      component: Game
     },
     {
       path: '/:pathMatch(.*)*',

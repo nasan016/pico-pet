@@ -1,13 +1,16 @@
 <script setup lang="ts">
-
 const props = defineProps({
-    title: String,
+    title: {
+        type: String,
+        required: true,
+    }
 })
+
 </script>
 
 <template>
-<div class="menuButton ma-2">
-{{title}}
+<div class="menuButton mb-2">
+    {{title}}
 </div>
 </template>
 
@@ -26,6 +29,6 @@ const props = defineProps({
 }
 
 .menuButton:hover{
-    color: red;
+    color: orange;
 }
 </style>
