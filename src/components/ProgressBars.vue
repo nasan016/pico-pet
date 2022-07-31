@@ -5,9 +5,9 @@ import Bars from "../components/Bars.vue"
 <template>
 <div class="pa-3">
     <div class="d-flex flex-column align-center justify-center test">
-        <Bars title="hunger" progress=90 barColor="orange"/>
-        <Bars title="wellness" progress=52 barColor="pink"/>
-        <Bars title="boredom" progress=30 barColor="green"/>
+        <Bars title="hunger" progress=85 barColor="orange"/>
+        <Bars title="wellness" progress=44 barColor="pink"/>
+        <Bars title="boredom" progress=96 barColor="green"/>
     </div>
 </div>
 </template>

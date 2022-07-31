@@ -19,8 +19,9 @@ const props = defineProps({
 
 <template>
 <div class="pb-2">
-<div class="barTitle">
-    {{title}}
+<div class="barTitle d-flex justify-space-between">
+    <div>{{title}}</div> 
+    <div>{{progress}}%</div>
 </div>
 <div class="progressBar">
     <v-progress-linear
