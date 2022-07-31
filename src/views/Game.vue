@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import Bars from "../components/Bars.vue"
+import ProgressBars from "../components/ProgressBars.vue"
+import ChatBox from "../components/ChatBox.vue"
 </script>
 
 <template>
-<div class="d-flex flex-column align-center justify-center test">
-    <Bars title="hunger" progress=90 barColor="orange"/>
-    <Bars title="wellness" progress=52 barColor="pink"/>
-    <Bars title="boredom" progress=30 barColor="green"/>
+<div class="game d-flex flex-row justify-space-between">
+    <ProgressBars/>
+    <ChatBox/>
 </div>
 </template>
 
 <style scoped>
-.test{
-    border: 2px solid white;
-    height: 210px;
-    width: 496px;
+.game{
+    width: 100%;
 }
 </style>
